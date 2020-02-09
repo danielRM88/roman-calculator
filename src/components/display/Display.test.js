@@ -1,19 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Button from "./Button";
+import Display from "./Display";
 
 import { render } from "@testing-library/react";
 import renderer from "react-test-renderer";
 
-describe("Button component", () => {
+describe("Display component", () => {
   it("Renders without crashing", () => {
     const div = document.createElement("div");
-    ReactDOM.render(<Button></Button>, div);
+    ReactDOM.render(<Display></Display>, div);
   });
 
   it("Renders button correctly", () => {
-    const { getByTestId } = render(<Button label="test"></Button>);
-    const label = getByTestId("button-test");
-    expect(label).toHaveTextContent("test");
+    const { getByTestId } = render(<Display text="number"></Display>);
+    const text = getByTestId("display");
+    expect(text).toHaveTextContent("number");
   });
 });
