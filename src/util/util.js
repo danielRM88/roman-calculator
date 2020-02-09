@@ -23,6 +23,7 @@ export const romanToInt = romanNumber => {
 };
 
 export const intToRoman = number => {
+  const passedNumber = number;
   if (number <= 0) {
     throw new Error("invalid number, it must be greater than zero");
   }
@@ -40,6 +41,10 @@ export const intToRoman = number => {
     }
 
     multiplier *= 10;
+  }
+
+  if (result === "undefined") {
+    throw new Error(`${passedNumber} cannot be represented in roman numerals by this calculator`)
   }
 
   return result;

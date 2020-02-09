@@ -11,7 +11,6 @@ const initialState = {
   operation: null,
   number1: null,
   number2: null,
-  result: null,
   error: null
 };
 const store = createStore(rootReducer, initialState);

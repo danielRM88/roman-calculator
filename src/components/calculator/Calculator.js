@@ -2,37 +2,79 @@ import React from "react";
 import Button from "../button/Button";
 import Display from "../display/Display";
 import { connect } from "react-redux";
+import "./Calculator.css";
 
 import {
   addNumber,
   addOperation,
-  calculate
+  calculate,
+  clear
 } from "../../actions/calculatorActions";
 
 export const Calculator = ({
   addNumberAction,
   addOperationAction,
   calculateAction,
-  number,
+  clearAction,
+  display,
   error
 }) => {
   return (
-    <div>
+    <div className="calculator">
       <h1>Roman Number Calculator</h1>
       {error !== null ? <p>{error}</p> : ""}
-      <Display text={number} />
       <br />
-      <Button label="I" onActionClick={addNumberAction}></Button>
-      <Button label="V" onActionClick={addNumberAction}></Button>
-      <Button label="X" onActionClick={addNumberAction}></Button>
-      <Button label="L" onActionClick={addNumberAction}></Button>
-      <Button label="C" onActionClick={addNumberAction}></Button>
-      <Button label="D" onActionClick={addNumberAction}></Button>
-      <Button label="M" onActionClick={addNumberAction}></Button>
-      <Button label="+" onActionClick={addOperationAction}></Button>
-      <Button label="-" onActionClick={addOperationAction}></Button>
-      <Button label="*" onActionClick={addOperationAction}></Button>
-      <Button label="=" onActionClick={calculateAction}></Button>
+      <div className="container">
+        <div className="row">
+          <div className="col-sm">
+            <Display text={display} />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm">
+            <Button label="I" onActionClick={addNumberAction}></Button>
+          </div>
+          <div className="col-sm">
+            <Button label="V" onActionClick={addNumberAction}></Button>
+          </div>
+          <div className="col-sm">
+            <Button label="+" onActionClick={addOperationAction}></Button>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm">
+            <Button label="X" onActionClick={addNumberAction}></Button>
+          </div>
+          <div className="col-sm">
+            <Button label="L" onActionClick={addNumberAction}></Button>
+          </div>
+          <div className="col-sm">
+            <Button label="-" onActionClick={addOperationAction}></Button>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm">
+            <Button label="C" onActionClick={addNumberAction}></Button>
+          </div>
+          <div className="col-sm">
+            <Button label="D" onActionClick={addNumberAction}></Button>
+          </div>
+          <div className="col-sm">
+            <Button label="*" onActionClick={addOperationAction}></Button>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm">
+            <Button label="CA" onActionClick={clearAction}></Button>
+          </div>
+          <div className="col-sm">
+            <Button label="M" onActionClick={addNumberAction}></Button>
+          </div>
+          <div className="col-sm">
+            <Button label="=" onActionClick={calculateAction}></Button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
@@ -41,19 +83,22 @@ const mapStateToProps = state => {
   const number1 = state.number1;
   const number2 = state.number2;
   const operation = state.operation;
-  const result = state.result;
-  let number = "";
+  let display = "";
 
-  if (result !== null) {
-    number = result;
-  } else if (operation !== null) {
-    number = number2;
-  } else {
-    number = number1;
+  if (number1 !== null) {
+    display += number1
+  }
+
+  if (operation !== null) {
+    display += ` ${operation} `
+  }
+
+  if (number2 !== null) {
+    display += number2
   }
 
   return {
-    number,
+    display,
     error: state.error
   };
 };
@@ -67,6 +112,9 @@ const mapDispatchToProps = dispatch => ({
   },
   calculateAction: () => {
     dispatch(calculate());
+  },
+  clearAction: () => {
+    dispatch(clear());
   }
 });
 
