@@ -35,7 +35,11 @@ export const intToRoman = number => {
     let last = number % 10;
 
     if (getRomanSymbolHash()[last] === undefined) {
-      result = getRomanSymbol(last, multiplier) + result;
+      try {
+        result = getRomanSymbol(last, multiplier) + result;
+      } catch(e) {
+        throw new Error(`${passedNumber} cannot be represented in roman numerals by this calculator`)
+      }
     } else {
       result = getRomanSymbolHash()[last * multiplier] + result;
     }
@@ -43,17 +47,13 @@ export const intToRoman = number => {
     multiplier *= 10;
   }
 
-  if (result === "undefined") {
-    throw new Error(`${passedNumber} cannot be represented in roman numerals by this calculator`)
-  }
-
   return result;
 };
 
 // this function transforms a single digit integer into its roman representation
 export const getRomanSymbol = (number, multiplier) => {
-  if (number > 9) {
-    throw new Error("number must be a single digit integer");
+  if (number > 9 || number <= 0) {
+    throw new Error("number must be a single digit positive integer greater than zero");
   }
 
   if (multiplier > 1 && multiplier % 10 !== 0) {

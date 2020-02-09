@@ -45,27 +45,27 @@ export default (state, action) => {
         };
       }
     case CALCULATE:
+      let returnState = {};
+      let operationResult = null;
+      let error = null;
       if (state.number2 === null || state.number2 === "") {
-        return state;
+        returnState = state;
       } else {
         try {
-          let operationResult = calculateResult(state.number1, state.number2, state.operation)
-          return {
-            ...state,
-            number1: operationResult,
-            number2: null,
-            operation: null
-          };
+          operationResult = calculateResult(state.number1, state.number2, state.operation);
         } catch (e) {
-          return {
-            ...state,
-            operation: null,
-            number1: null,
-            number2: null,
-            error: e.message
-          };
+          error = e.message;
         }
+        returnState = {
+          ...state,
+          number1: operationResult,
+          number2: null,
+          operation: null,
+          error
+        };
       }
+
+      return returnState;
     default:
       return state;
   }
