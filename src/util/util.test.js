@@ -41,15 +41,12 @@ describe("util functions", () => {
       expect(getRomanSymbol(3, 10)).toBe("XXX");
     });
 
-    it("throws error if number is not a single digit positive integer greater than zero", () => {
+    it("throws error if number is not a single digit positive integer", () => {
       expect(() => {
         getRomanSymbol(13, 1);
       }).toThrow(Error);
       expect(() => {
         getRomanSymbol(-3, 1);
-      }).toThrow(Error);
-      expect(() => {
-        getRomanSymbol(0, 1);
       }).toThrow(Error);
     });
 

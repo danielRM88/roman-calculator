@@ -52,7 +52,7 @@ export const intToRoman = number => {
 
 // this function transforms a single digit integer into its roman representation
 export const getRomanSymbol = (number, multiplier) => {
-  if (number > 9 || number <= 0) {
+  if (number > 9 || number < 0) {
     throw new Error("number must be a single digit positive integer greater than zero");
   }
 
@@ -76,6 +76,10 @@ export const getRomanSymbol = (number, multiplier) => {
     }
   } else if (number === 9) {
     result = romanSymbolHash[1 * multiplier] + romanSymbolHash[10 * multiplier];
+  }
+
+  if (result.includes("undefined")) {
+    throw new Error("could not convert number to roman numeral")
   }
 
   return result;
